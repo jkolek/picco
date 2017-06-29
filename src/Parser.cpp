@@ -906,10 +906,10 @@ ASTNode *CParser::DeclarationSpecifiers()
     unsigned flags = 0x0;
 
     if (isStorageClassSpecifier(_sym))
-        flags = StorageClassSpecifier(flags);
+        StorageClassSpecifier(flags);
 
     if (isTypeQualifier(_sym))
-        flags = TypeQualifier(flags);
+        TypeQualifier(flags);
 
     if (isTypeSpecifier(_sym, 1))
     {
@@ -952,7 +952,7 @@ ASTNode *CParser::InitDeclarator(ASTNode *typeSpec)
     return declr;
 }
 
-unsigned CParser::StorageClassSpecifier(unsigned flags)
+void CParser::StorageClassSpecifier(unsigned &flags)
 {
     if (_sym == TK_TYPEDEF)
     {
@@ -979,8 +979,6 @@ unsigned CParser::StorageClassSpecifier(unsigned flags)
         getTok();
         flags |= SCS_REGISTER;
     }
-
-    return flags;
 }
 
 static ASTNode *
@@ -1281,7 +1279,7 @@ ListASTNode *CParser::EnumeratorList()
     return enums;
 }
 
-unsigned CParser::TypeQualifier(unsigned flags)
+void CParser::TypeQualifier(unsigned &flags)
 {
     if (_sym == TK_CONST)
     {
@@ -1293,8 +1291,6 @@ unsigned CParser::TypeQualifier(unsigned flags)
         getTok();
         flags |= TQ_VOLATILE;
     }
-
-    return flags;
 }
 
 ASTNode *CParser::Declarator(DeclaratorKind declKind, ASTNode *typeSpec)

@@ -116,7 +116,7 @@ class CParser : public Parser
     ASTNode *DeclarationSpecifiers();
     ListASTNode *InitDeclaratorList(ASTNode *typeSpec);
     ASTNode *InitDeclarator(ASTNode *typeSpec);
-    unsigned StorageClassSpecifier(unsigned flags);
+    void StorageClassSpecifier(unsigned &flags);
     ASTNode *TypeSpecifier();
     ASTNode *StructOrUnionSpecifier();
     ListASTNode *StructDeclarationList();
@@ -125,7 +125,7 @@ class CParser : public Parser
     ASTNode *StructDeclarator(ASTNode *typeSpec);
     ASTNode *EnumSpecifier();
     ListASTNode *EnumeratorList();
-    unsigned TypeQualifier(unsigned flags);
+    void TypeQualifier(unsigned &flags);
     ASTNode *Declarator(DeclaratorKind, ASTNode *typeSpec);
     ASTNode *DirectDeclarator(DeclaratorKind, ASTNode *typeSpec);
     ASTNode *ParameterTypeList();

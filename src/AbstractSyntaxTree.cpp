@@ -1168,11 +1168,13 @@ Type_t PredecrementExprASTNode::checkType(AbstractSyntaxTree *ast)
 IRExpr *PredecrementExprASTNode::emitIR(AbstractSyntaxTree *ast)
 {
     SeqIRExpr *seq = ast->getCurrentSeq();
+    Type_t tp = checkType(ast);
     IRExpr *x = _expr->emitIR(ast);
+    unsigned n = tp->kind == T_POINTER ? tp->baseType->size : 1;
 
     // Add this before the whole statement IR subtree.
     seq->add(IR_MOVE(IR_i32, x,
-                     IR_BINOP(IR_i32, IRBK_MINUS, x, IR_CONST(IR_i32, 1))));
+                     IR_BINOP(IR_i32, IRBK_MINUS, x, IR_CONST(IR_i32, n))));
 
     return x;
 }
@@ -1194,11 +1196,13 @@ Type_t PreincrementExprASTNode::checkType(AbstractSyntaxTree *ast)
 IRExpr *PreincrementExprASTNode::emitIR(AbstractSyntaxTree *ast)
 {
     SeqIRExpr *seq = ast->getCurrentSeq();
+    Type_t tp = checkType(ast);
     IRExpr *x = _expr->emitIR(ast);
+    unsigned n = tp->kind == T_POINTER ? tp->baseType->size : 1;
 
     // Add this before the whole statement IR subtree.
     seq->add(IR_MOVE(IR_i32, x,
-                     IR_BINOP(IR_i32, IRBK_PLUS, x, IR_CONST(IR_i32, 1))));
+                     IR_BINOP(IR_i32, IRBK_PLUS, x, IR_CONST(IR_i32, n))));
 
     return x;
 }
@@ -1222,7 +1226,7 @@ IRExpr *PostdecrementExprASTNode::emitIR(AbstractSyntaxTree *ast)
     SeqIRExpr *seq = IR_SEQ();
     Type_t tp = checkType(ast);
     IRExpr *x = _expr->emitIR(ast);
-    unsigned sz = tp->kind == T_POINTER ? 4 : 1;
+    unsigned n = tp->kind == T_POINTER ? tp->baseType->size : 1;
 
     // Push this to a queue and pop and add to the sequence after the whole
     // statement IR subtree is emitted.
@@ -1233,7 +1237,7 @@ IRExpr *PostdecrementExprASTNode::emitIR(AbstractSyntaxTree *ast)
     return x;*/
 
     seq->add(IR_MOVE(IR_i32, x,
-                     IR_BINOP(IR_i32, IRBK_MINUS, x, IR_CONST(IR_i32, sz))));
+                     IR_BINOP(IR_i32, IRBK_MINUS, x, IR_CONST(IR_i32, n))));
 
     return seq;
 }
@@ -1257,7 +1261,7 @@ IRExpr *PostincrementExprASTNode::emitIR(AbstractSyntaxTree *ast)
     SeqIRExpr *seq = IR_SEQ();
     Type_t tp = checkType(ast);
     IRExpr *x = _expr->emitIR(ast);
-    unsigned sz = tp->kind == T_POINTER ? 4 : 1;
+    unsigned n = tp->kind == T_POINTER ? tp->baseType->size : 1;
 
     // Push this to a queue and pop and add to the sequence after the whole
     // statement IR subtree is emitted.
@@ -1269,7 +1273,7 @@ IRExpr *PostincrementExprASTNode::emitIR(AbstractSyntaxTree *ast)
     return x;*/
 
     seq->add(IR_MOVE(IR_i32, x,
-                     IR_BINOP(IR_i32, IRBK_PLUS, x, IR_CONST(IR_i32, sz))));
+                     IR_BINOP(IR_i32, IRBK_PLUS, x, IR_CONST(IR_i32, n))));
 
     return seq;
 }
