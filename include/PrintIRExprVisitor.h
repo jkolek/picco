@@ -147,6 +147,34 @@ public:
                 std::cout << "(binop div " << IRTypeToStr(n->getIRType())
                           << std::endl;
                 break;
+            case IRBK_MOD:
+                std::cout << "(binop mod " << IRTypeToStr(n->getIRType())
+                          << std::endl;
+                break;
+            case IRBK_AND:
+                std::cout << "(binop and " << IRTypeToStr(n->getIRType())
+                          << std::endl;
+                break;
+            case IRBK_OR:
+                std::cout << "(binop or " << IRTypeToStr(n->getIRType())
+                          << std::endl;
+                break;
+            case IRBK_XOR:
+                std::cout << "(binop xor " << IRTypeToStr(n->getIRType())
+                          << std::endl;
+                break;
+            case IRBK_LSHIFT:
+                std::cout << "(binop lshift " << IRTypeToStr(n->getIRType())
+                          << std::endl;
+                break;
+            case IRBK_RSHIFT:
+                std::cout << "(binop rshift " << IRTypeToStr(n->getIRType())
+                          << std::endl;
+                break;
+            case IRBK_ARSHIFT:
+                std::cout << "(binop arshift " << IRTypeToStr(n->getIRType())
+                          << std::endl;
+                break;
         }
 
         n->getLhs()->accept(this);

@@ -160,7 +160,7 @@ protected:
 
 public:
     void nextCh();
-    virtual TokenKind next(Token_t t) {}
+    virtual TokenKind next(Token_t t) { return TK_UNKNOWN; }
 
     Lexer(const char *filename);
 

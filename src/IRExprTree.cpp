@@ -661,6 +661,14 @@ static GenOp getGenOp(IRRelopKind irRelop)
             return GEN_GE;
         case IRRK_GT:
             return GEN_GT;
+        case IRRK_ULE:
+            return GEN_LE;
+        case IRRK_ULT:
+            return GEN_LT;
+        case IRRK_UGE:
+            return GEN_GE;
+        case IRRK_UGT:
+            return GEN_GT;
     }
     return (GenOp) - 1;
 }
@@ -680,6 +688,14 @@ static GenOp getGenOpInv(IRRelopKind irRelop)
         case IRRK_GE:
             return GEN_LT;
         case IRRK_GT:
+            return GEN_LE;
+        case IRRK_ULE:
+            return GEN_GT;
+        case IRRK_ULT:
+            return GEN_GE;
+        case IRRK_UGE:
+            return GEN_LT;
+        case IRRK_UGT:
             return GEN_LE;
     }
     return (GenOp) - 1;

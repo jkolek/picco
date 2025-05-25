@@ -10,6 +10,7 @@
 
 #include <cstring>
 
+#define LABEL_SIZE 256
 #define IDLEN 256
 #define MAXSTR 1024
 

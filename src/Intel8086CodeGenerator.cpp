@@ -316,34 +316,34 @@ const char *Intel8086CodeGenerator::GenIntel8086OpcToAsm(GenIntel8086Opc opcode)
 
 void Intel8086CodeGenerator::put_opc(GenIntel8086Opc opcode)
 {
-    char inst[256];
+    char inst[ASM_STR_SIZE];
 
-    sprintf(inst, "\t%s", GenIntel8086OpcToAsm(opcode));
+    snprintf(inst, ASM_STR_SIZE, "\t%s", GenIntel8086OpcToAsm(opcode));
     putAsmStr(inst);
 }
 
 void Intel8086CodeGenerator::put_opc_lab(GenIntel8086Opc opcode,
                                          const char *lab)
 {
-    char inst[256];
+    char inst[ASM_STR_SIZE];
 
-    sprintf(inst, "\t%s\t%s", GenIntel8086OpcToAsm(opcode), lab);
+    snprintf(inst, ASM_STR_SIZE, "\t%s\t%s", GenIntel8086OpcToAsm(opcode), lab);
     putAsmStr(inst);
 }
 
 void Intel8086CodeGenerator::put_opc_imm(GenIntel8086Opc opcode, int imm)
 {
-    char inst[256];
+    char inst[ASM_STR_SIZE];
 
-    sprintf(inst, "\t%s\t%d", GenIntel8086OpcToAsm(opcode), imm);
+    snprintf(inst, ASM_STR_SIZE, "\t%s\t%d", GenIntel8086OpcToAsm(opcode), imm);
     putAsmStr(inst);
 }
 
 void Intel8086CodeGenerator::put_opc_reg(GenIntel8086Opc opcode, unsigned reg)
 {
-    char inst[256];
+    char inst[ASM_STR_SIZE];
 
-    sprintf(inst, "\t%s\t%s", GenIntel8086OpcToAsm(opcode), regToStr(reg));
+    snprintf(inst, ASM_STR_SIZE, "\t%s\t%s", GenIntel8086OpcToAsm(opcode), regToStr(reg));
     putAsmStr(inst);
 }
 
@@ -351,9 +351,9 @@ void Intel8086CodeGenerator::put_opc_reg_reg(GenIntel8086Opc opcode,
                                              unsigned reg1,
                                              unsigned reg2)
 {
-    char inst[256];
+    char inst[ASM_STR_SIZE];
 
-    sprintf(inst, "\t%s\t%s, %s", GenIntel8086OpcToAsm(opcode), regToStr(reg1),
+    snprintf(inst, ASM_STR_SIZE, "\t%s\t%s, %s", GenIntel8086OpcToAsm(opcode), regToStr(reg1),
             regToStr(reg2));
     putAsmStr(inst);
 }
@@ -362,9 +362,9 @@ void Intel8086CodeGenerator::put_opc_reg_imm(GenIntel8086Opc opcode,
                                              unsigned reg1,
                                              int imm)
 {
-    char inst[256];
+    char inst[ASM_STR_SIZE];
 
-    sprintf(inst, "\t%s\t%s, %d", GenIntel8086OpcToAsm(opcode), regToStr(reg1),
+    snprintf(inst, ASM_STR_SIZE, "\t%s\t%s, %d", GenIntel8086OpcToAsm(opcode), regToStr(reg1),
             imm);
     putAsmStr(inst);
 }
@@ -374,9 +374,9 @@ void Intel8086CodeGenerator::put_opc_reg_mem(GenIntel8086Opc opcode,
                                              unsigned base,
                                              int offset)
 {
-    char inst[256];
+    char inst[ASM_STR_SIZE];
 
-    sprintf(inst, "\t%s\t%s, [%s+%d]", GenIntel8086OpcToAsm(opcode),
+    snprintf(inst, ASM_STR_SIZE, "\t%s\t%s, [%s+%d]", GenIntel8086OpcToAsm(opcode),
             regToStr(reg), regToStr(base), offset);
     putAsmStr(inst);
 }
@@ -386,9 +386,9 @@ void Intel8086CodeGenerator::put_opc_mem_reg(GenIntel8086Opc opcode,
                                              int offset,
                                              unsigned reg)
 {
-    char inst[256];
+    char inst[ASM_STR_SIZE];
 
-    sprintf(inst, "\t%s\t[%s+%d], %s", GenIntel8086OpcToAsm(opcode),
+    snprintf(inst, ASM_STR_SIZE, "\t%s\t[%s+%d], %s", GenIntel8086OpcToAsm(opcode),
             regToStr(base), offset, regToStr(reg));
     putAsmStr(inst);
 }
@@ -398,9 +398,9 @@ void Intel8086CodeGenerator::put_opc_mem_imm(GenIntel8086Opc opcode,
                                              int offset,
                                              int imm)
 {
-    char inst[256];
+    char inst[ASM_STR_SIZE];
 
-    sprintf(inst, "\t%s\t[%s+%d], %d", GenIntel8086OpcToAsm(opcode),
+    snprintf(inst, ASM_STR_SIZE, "\t%s\t[%s+%d], %d", GenIntel8086OpcToAsm(opcode),
             regToStr(base), offset, imm);
     putAsmStr(inst);
 }
@@ -1519,6 +1519,7 @@ void Intel8086CodeGenerator::addFixup(unsigned fixupKind,
 unsigned Intel8086CodeGenerator::fixupToRelocation(unsigned fixupKind)
 {
     // TODO: Implement
+    return 0;
 }
 
 void Intel8086CodeGenerator::resolveFixups() {}

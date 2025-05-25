@@ -121,6 +121,8 @@ public:
 
         switch (tm)
         {
+            case TM_UNKNOWN:
+                return nullptr;
             case TM_ARM:
                 gen = new ARMCodeGenerator(itempool);
                 gen->setIsLittleEndian(true);

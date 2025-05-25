@@ -1680,7 +1680,7 @@ void ARMCodeGenerator::resolveFixups()
 
 void ARMCodeGenerator::emitLabel(const char *labelName)
 {
-    char str[256];
+    char str[LABEL_SIZE];
     LabelMap::iterator it;
     GenSymbol *symbol;
 
@@ -1698,7 +1698,7 @@ void ARMCodeGenerator::emitLabel(const char *labelName)
 
     if (symbol->getIsGlobal())
     {
-        sprintf(str, "\t.globl %s", labelName);
+        snprintf(str, LABEL_SIZE, "\t.globl %s", labelName);
         putAsmStr(str);
     }
 
@@ -1706,14 +1706,14 @@ void ARMCodeGenerator::emitLabel(const char *labelName)
 
     if (symbol->getIsFunction())
     {
-        sprintf(str, "\t.ent %s", labelName);
+        snprintf(str, LABEL_SIZE, "\t.ent %s", labelName);
         putAsmStr(str);
 
-        sprintf(str, "\t.type %s, @function", labelName);
+        snprintf(str, LABEL_SIZE, "\t.type %s, @function", labelName);
         putAsmStr(str);
     }
 
-    sprintf(str, "%s:", labelName);
+    snprintf(str, LABEL_SIZE, "%s:", labelName);
     putAsmStr(str);
 }
 

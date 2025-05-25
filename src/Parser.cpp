@@ -61,7 +61,7 @@ void Parser::check(TokenKind expected)
     {
         char msg[MAXSTR];
 
-        sprintf(msg, "expected '%s'", _name[expected]);
+        snprintf(msg, MAXSTR, "expected '%s'", _name[expected]);
         parsingError(msg);
     }
 }
@@ -986,7 +986,8 @@ stbTypeToASTNodeType(AbstractSyntaxTree *ast, Type_t type, const char *objName)
 {
     switch (type->kind)
     {
-        // case T_NONE:      return IR_i32;
+        case T_NONE:
+            return NULL_AST_NODE;
         case T_CHAR:
             return ast->charTypeASTNode;
         case T_SHORT:
@@ -1013,6 +1014,9 @@ stbTypeToASTNodeType(AbstractSyntaxTree *ast, Type_t type, const char *objName)
             //                                    NULL_AST_NODE);
             return new StructTypeASTNode(new IdentASTNode(objName),
                                          NULL_AST_NODE);
+        case T_UNION:
+            return new UnionTypeASTNode(new IdentASTNode(objName),
+                                        NULL_AST_NODE);
         case T_BOOL:
             return NULL_AST_NODE;
         case T_REAL:
@@ -1092,7 +1096,7 @@ ASTNode *CParser::TypeSpecifier()
         {
             return stbTypeToASTNodeType(_ast, obj->type, obj->name);
         }
-        sprintf(msg, "unknown type '%s'", obj->name);
+        snprintf(msg, MAXSTR, "unknown type '%s'", obj->name);
         parsingError(msg);
     }
 

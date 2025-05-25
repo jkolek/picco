@@ -50,9 +50,9 @@ void AbstractSyntaxTree::error(const char *msg, int lineNum)
 
 void AbstractSyntaxTree::error(const char *msg, const char *s, int lineNum)
 {
-    char msg1[256];
+    char msg1[MAXSTR];
 
-    sprintf(msg1, msg, s);
+    snprintf(msg1, MAXSTR, msg, s);
     std::cout << "line " << lineNum << ": error: " << msg1 << std::endl;
     _errors++;
     exit(1);
@@ -63,9 +63,9 @@ void AbstractSyntaxTree::error(const char *msg,
                                const char *s2,
                                int lineNum)
 {
-    char msg1[256];
+    char msg1[MAXSTR];
 
-    sprintf(msg1, msg, s1, s2);
+    snprintf(msg1, MAXSTR, msg, s1, s2);
     std::cout << "line " << lineNum << ": error: " << msg1 << std::endl;
     _errors++;
     exit(1);
@@ -79,9 +79,9 @@ void AbstractSyntaxTree::warning(const char *msg, int lineNum)
 
 void AbstractSyntaxTree::warning(const char *msg, const char *s, int lineNum)
 {
-    char msg1[256];
+    char msg1[MAXSTR];
 
-    sprintf(msg1, msg, s);
+    snprintf(msg1, MAXSTR, msg, s);
     std::cout << "line " << lineNum << ": warning: " << msg1 << std::endl;
     _warnings++;
 }
@@ -457,11 +457,11 @@ IRExpr *StringConstASTNode::emitIR(AbstractSyntaxTree *ast)
     // CodeGenerator *gen = ast->getCodeGenerator();
     IRExprTree *iret = ast->getIRExprTree();
     unsigned labc = iret->getLabelCount();
-    char label[256];
+    char label[LABEL_SIZE];
 
     if (ast->currentIRExprFunc != NULL_IR_EXPR)
     {
-        sprintf(label, "$LC_%d", labc);
+        snprintf(label, LABEL_SIZE, "$LC_%d", labc);
         static_cast<FunctionIRExpr *>(ast->currentIRExprFunc)
             ->addStringConst(label, _value);
     }
@@ -557,7 +557,7 @@ static bool isStaticVarDecl(ASTNode *n)
 
 IRExpr *FunctionDeclASTNode::emitIR(AbstractSyntaxTree *ast)
 {
-    char funcEpilogueLabel[32];
+    char funcEpilogueLabel[LABEL_SIZE];
     const char *fnName;
     LabelIRExpr *lab;
     FunctionIRExpr *func;
@@ -693,7 +693,7 @@ IRExpr *FunctionDeclASTNode::emitIR(AbstractSyntaxTree *ast)
     ast->pushCurrentSeq(seq);
     seq->add(stmts->emitIR(ast));
     ast->popCurrentSeq();
-    sprintf(funcEpilogueLabel, "%s_epilogue", fnName);
+    snprintf(funcEpilogueLabel, LABEL_SIZE, "%s_epilogue", fnName);
     lab = IR_LABEL(funcEpilogueLabel);
     seq->add(lab);
 
@@ -747,14 +747,14 @@ IRExpr *DoStmtASTNode::emitIR(AbstractSyntaxTree *ast)
 {
     SeqIRExpr *seq = IR_SEQ();
     IRExpr *cond;
-    char loop_lab[32];
-    // char true_lab[32];
-    char false_lab[32];
+    char loop_lab[LABEL_SIZE];
+    // char true_lab[LABEL_SIZE];
+    char false_lab[LABEL_SIZE];
     IRExprTree *iret = ast->getIRExprTree();
     unsigned labc = iret->getLabelCount();
 
-    sprintf(loop_lab, "loop_lab_%d", labc);
-    sprintf(false_lab, "false_lab_%d", labc);
+    snprintf(loop_lab, LABEL_SIZE, "loop_lab_%d", labc);
+    snprintf(false_lab, LABEL_SIZE, "false_lab_%d", labc);
 
     // Expression should have scalar type
     //UNLESS(stb->isScalarType(x->type))
@@ -811,13 +811,13 @@ IRExpr *ForStmtASTNode::emitIR(AbstractSyntaxTree *ast)
     // for (init; condition; step) body
 
     SeqIRExpr *seq = IR_SEQ();
-    char loop_lab[32];
-    char false_lab[32];
+    char loop_lab[LABEL_SIZE];
+    char false_lab[LABEL_SIZE];
     IRExprTree *iret = ast->getIRExprTree();
     unsigned labc = iret->getLabelCount();
 
-    sprintf(loop_lab, "loop_lab_%d", labc);
-    sprintf(false_lab, "false_lab_%d", labc);
+    snprintf(loop_lab, LABEL_SIZE, "loop_lab_%d", labc);
+    snprintf(false_lab, LABEL_SIZE, "false_lab_%d", labc);
 
     // Expression should be of a scalar type
     /*UNLESS(stb->isScalarType(x->type))
@@ -861,15 +861,15 @@ IRExpr *IfStmtASTNode::emitIR(AbstractSyntaxTree *ast)
 {
     SeqIRExpr *seq = IR_SEQ();
     IRExpr *cond;
-    char true_lab[32];
-    char else_lab[32];
-    char end_lab[32];
+    char true_lab[LABEL_SIZE];
+    char else_lab[LABEL_SIZE];
+    char end_lab[LABEL_SIZE];
     IRExprTree *iret = ast->getIRExprTree();
     unsigned labc = iret->getLabelCount();
 
-    sprintf(true_lab, "true_lab_%d", labc);
-    sprintf(else_lab, "else_lab_%d", labc);
-    sprintf(end_lab, "end_lab_%d", labc);
+    snprintf(true_lab, LABEL_SIZE, "true_lab_%d", labc);
+    snprintf(else_lab, LABEL_SIZE, "else_lab_%d", labc);
+    snprintf(end_lab, LABEL_SIZE, "end_lab_%d", labc);
 
     // FIXME:
     //  If condition expression is in right side of assign expression:
@@ -956,7 +956,7 @@ Type_t ReturnStmtASTNode::checkType(AbstractSyntaxTree *ast)
 IRExpr *ReturnStmtASTNode::emitIR(AbstractSyntaxTree *ast)
 {
     // TODO: Make this return code generation for the main function as well.
-    char funcEpilogueLabel[32];
+    char funcEpilogueLabel[LABEL_SIZE];
     SeqIRExpr *seq;
     IRExpr *e = NULL_IR_EXPR;
 
@@ -982,7 +982,7 @@ IRExpr *ReturnStmtASTNode::emitIR(AbstractSyntaxTree *ast)
     if (e != NULL_IR_EXPR)
         seq->add(IR_MOVE(IR_i32, IR_TEMP(IR_i32, "RV"), e));
 
-    sprintf(funcEpilogueLabel, "%s_epilogue", ast->getCurrentFuncDecl()->name);
+    snprintf(funcEpilogueLabel, LABEL_SIZE, "%s_epilogue", ast->getCurrentFuncDecl()->name);
     seq->add(IR_JUMP(IR_NAME(funcEpilogueLabel)));
 
     return seq;
@@ -997,14 +997,14 @@ IRExpr *WhileStmtASTNode::emitIR(AbstractSyntaxTree *ast)
 {
     SeqIRExpr *seq = IR_SEQ();
     IRExpr *cond;
-    char loop_lab[32];
-    // char true_lab[32];
-    char false_lab[32];
+    char loop_lab[LABEL_SIZE];
+    // char true_lab[LABEL_SIZE];
+    char false_lab[LABEL_SIZE];
     IRExprTree *iret = ast->getIRExprTree();
     unsigned labc = iret->getLabelCount();
 
-    sprintf(loop_lab, "loop_lab_%d", labc);
-    sprintf(false_lab, "false_lab_%d", labc);
+    snprintf(loop_lab, LABEL_SIZE, "loop_lab_%d", labc);
+    snprintf(false_lab, LABEL_SIZE, "false_lab_%d", labc);
 
     // Expression should have scalar type
     //UNLESS(stb->isScalarType(x->type))
@@ -1120,7 +1120,7 @@ IRExpr *LogNotExprASTNode::emitIR(AbstractSyntaxTree *ast)
 {
     IRExprTree *iret;
     SeqIRExpr *seq;
-    char true_lab[32];
+    char true_lab[LABEL_SIZE];
     const char *prev_true_lab, *prev_false_lab;
     unsigned labc;
     IRExpr *x;
@@ -1134,7 +1134,7 @@ IRExpr *LogNotExprASTNode::emitIR(AbstractSyntaxTree *ast)
     iret = ast->getIRExprTree();
     labc = iret->getLabelCount();
 
-    sprintf(true_lab, "true_lab_%d", labc);
+    snprintf(true_lab, LABEL_SIZE, "true_lab_%d", labc);
     ast->pushTrueLabel(true_lab);
 
     seq = IR_SEQ();
@@ -1454,6 +1454,7 @@ IRExpr *IndirectRefASTNode::emitIR(AbstractSyntaxTree *ast)
         return mem;
     }
 
+    tmpTp = nullptr;
     stb = ast->getSymbolTable();
     name = AST_IDENT_VALUE(_expr);
     nameLineNum = AST_IDENT_LINE_NUM(_expr);
@@ -1741,7 +1742,7 @@ IRExpr *LogAndExprASTNode::emitIR(AbstractSyntaxTree *ast)
 {
     IRExprTree *iret = ast->getIRExprTree();
     SeqIRExpr *seq = IR_SEQ();
-    char true_lab[32];
+    char true_lab[LABEL_SIZE];
     const char *prev_true_lab = ast->getTopTrueLabel();
     const char *prev_false_lab = ast->getTopFalseLabel();
     unsigned labc = iret->getLabelCount();
@@ -1749,7 +1750,7 @@ IRExpr *LogAndExprASTNode::emitIR(AbstractSyntaxTree *ast)
 
     checkType(ast);
 
-    sprintf(true_lab, "true_lab_%d", labc);
+    snprintf(true_lab, LABEL_SIZE, "true_lab_%d", labc);
     ast->pushTrueLabel(true_lab);
 
     x = _lhs->emitIR(ast);
@@ -1831,7 +1832,7 @@ IRExpr *LogOrExprASTNode::emitIR(AbstractSyntaxTree *ast)
 {
     SeqIRExpr *seq = IR_SEQ();
     IRExpr *x, *y;
-    char false_lab[32];
+    char false_lab[LABEL_SIZE];
     const char *prev_true_lab = ast->getTopTrueLabel();
     const char *prev_false_lab = ast->getTopFalseLabel();
     IRExprTree *iret = ast->getIRExprTree();
@@ -1839,7 +1840,7 @@ IRExpr *LogOrExprASTNode::emitIR(AbstractSyntaxTree *ast)
 
     checkType(ast);
 
-    sprintf(false_lab, "false_lab_%d", labc);
+    snprintf(false_lab, LABEL_SIZE, "false_lab_%d", labc);
     ast->pushFalseLabel(false_lab);
 
     x = _lhs->emitIR(ast);

@@ -72,12 +72,12 @@ static unsigned getRs(unsigned binary) { return (binary >> 8) % 0x10; }
 
 static unsigned getRm(unsigned binary) { return binary % 0x10; }
 
-static unsigned getOperand2(unsigned binary)
+/*static unsigned getOperand2(unsigned binary)
 {
     unsigned imm = (binary >> 25) % 0x2;
     // if (imm)
     // return (binary )
-}
+}*/
 
 static void storeWordToMem(unsigned offset, unsigned data)
 {

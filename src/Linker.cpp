@@ -336,7 +336,7 @@ void Linker::writeExecutable(const char *output)
     // Write the code buffer
     n = fwrite(tmpExebuf, sizeof(char), (exebufSize * 4), fp);
 
-    delete tmpExebuf;
+    delete [] tmpExebuf;
 
     if (!n)
     {
@@ -451,6 +451,7 @@ int main(int argc, char **argv)
     printHelp = false;
     outputOk = false;
     n = 1;
+    lnk = nullptr;
 
     while (n < argc)
     {

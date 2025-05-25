@@ -41,13 +41,13 @@
 
 #define PUT_ASM_1(inst, buf, prm)                                              \
     {                                                                          \
-        sprintf(inst, buf, prm);                                               \
+        snprintf(inst, ASM_STR_SIZE, buf, prm);                                               \
         putAsmStr(inst);                                                       \
     }
 
 #define PUT_ASM_2(inst, buf, prm1, prm2)                                       \
     {                                                                          \
-        sprintf(inst, buf, prm1, prm2);                                        \
+        snprintf(inst, ASM_STR_SIZE, buf, prm1, prm2);                                        \
         putAsmStr(inst);                                                       \
     }
 
@@ -494,7 +494,7 @@ public:
     int getPC() { return PC; }
 
     virtual bool addSymbol(const char *name, int offset);
-    virtual unsigned addStringToRData(const char *value) {}
+    virtual unsigned addStringToRData(const char *value) { return 0; }
     virtual unsigned addStringToReadOnlyData(const char *value);
     virtual void setStaticDataSize(int size);
     virtual void setMainPC();

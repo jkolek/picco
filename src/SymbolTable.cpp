@@ -193,7 +193,7 @@ Object_t SymbolTable::getNewTemporary(Type_t type)
     Object_t obj;
     char name[10];
 
-    sprintf(name, "$t%d", temporaryCount);
+    snprintf(name, 10, "$t%d", temporaryCount);
     temporaryCount++;
     obj = insert(name, OBJ_VAR, type);
 

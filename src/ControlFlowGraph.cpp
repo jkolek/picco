@@ -92,9 +92,9 @@ std::vector<BasicBlock *> *ControlFlowGraph::createBasicBlocks(IRExpr *expr)
 
             if (!IR_MATCH_LABEL(elems[i]))
             {
-                char bblabel[256];
+                char bblabel[LABEL_SIZE];
 
-                sprintf(bblabel, "BB_%d", labelCount);
+                snprintf(bblabel, LABEL_SIZE, "BB_%d", labelCount);
                 labelCount++;
                 bb->add(new LabelIRExpr(bblabel));
             }
@@ -125,10 +125,10 @@ std::vector<BasicBlock *> *ControlFlowGraph::createBasicBlocks(IRExpr *expr)
     {
         // Pseudo basic block representing ENTRY to function
         BasicBlock *entry = createBasicBlock();
-        char bblabel[256];
+        char bblabel[LABEL_SIZE];
 
-        // sprintf(bblabel, "%s_entry", function_name);
-        sprintf(bblabel, "__entry__");
+        // snprintf(bblabel, LABEL_SIZE, "%s_entry", function_name);
+        snprintf(bblabel, LABEL_SIZE, "__entry__");
         labelCount++;
         entry->add(new LabelIRExpr(bblabel));
 

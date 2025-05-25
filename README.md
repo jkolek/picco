@@ -31,7 +31,7 @@ To download and install PICCO, type into the terminal:
 This will install the executables `picco`, `plinker` and `armv7emu` into
 directory `/usr/bin`.
 
-To run tests, in the picco source directory type:
+To run tests, in the picco test directory type:
 
 ```
   $ python runtests.py
@@ -49,6 +49,7 @@ Usage example:
   $ picco test/c/add_nums.c --target arm # The output will be output.o
   $ plinker output.o --target arm        # The output will be output.out
   $ armv7emu output.out
+  $ echo $?
 ```
 
 To dump an abstract syntax tree, IR expression tree or target machine code of the
