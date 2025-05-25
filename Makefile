@@ -87,10 +87,10 @@ ELFObject.o: ${INCLUDE}/ELFObject.h ${INCLUDE}/ELF.h
 	$(CXX) $(CXXFLAGS) -c ${SRC}/ELFObject.cpp
 
 plinker:
-	$(CXX) $(CXXFLAGS) ${SRC}/Linker.cpp ${INCLUDE}/PiccoObjectFormat.h -o plinker
+	$(CXX) $(CXXFLAGS) ${SRC}/Linker.cpp -o plinker
 
 armv7emu:
-	$(CC) $(CFLAGS) ${SRC}/armv7emu.c ${INCLUDE}/PiccoObjectFormat.h -o armv7emu
+	$(CC) $(CFLAGS) ${SRC}/armv7emu.c -o armv7emu
 
 install:
 	-cp ${BIN}/picco ${DEST}
