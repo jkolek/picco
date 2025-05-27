@@ -103,13 +103,12 @@ typedef struct Object
     struct Object *next;
 
     Object(const char *Name, ObjectKind Kind, Type_t Type)
-        : next(nullptr), used(false), isConstant(false), ival(0), adr(0),
-          level(0), prmc(0), frameSize(0), containsFunctionCall(false),
-          locals(nullptr), inRegister(false), reg(0), parIndex(0)
+        : kind(Kind), type(Type), inRegister(false), reg(0), parIndex(0),
+          used(false), ival(0), adr(0), level(0),
+          prmc(0), frameSize(0), containsFunctionCall(false),
+          locals(nullptr), isConstant(false), next(nullptr)
     {
         strcpy(name, Name);
-        kind = Kind;
-        type = Type;
     }
 } * Object_t;
 

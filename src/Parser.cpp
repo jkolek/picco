@@ -205,7 +205,7 @@ void CParser::initNames()
 void CParser::parse(char *output, bool optimize)
 {
     ASTNode *tree;
-    int errors;
+    //int errors;
 
     _lex->nextCh();
     initTokenBuffer();
@@ -902,7 +902,7 @@ ASTNode *CParser::Declaration(ASTNode *declSpec)
 ASTNode *CParser::DeclarationSpecifiers()
 {
     ASTNode *declSpec = NULL_AST_NODE;
-    ASTNodeKind storageClassSpec = NK_UNKNOWN;
+    //ASTNodeKind storageClassSpec = NK_UNKNOWN;
     unsigned flags = 0x0;
 
     if (isStorageClassSpecifier(_sym))
@@ -1641,7 +1641,7 @@ ASTNode *CParser::LabeledStatement()
         expr = ConstantExpression();
         check(TK_COLON);
         stmt = Statement();
-        labstmt = new CaseLabelASTNode(label, stmt);
+        labstmt = new CaseLabelASTNode(expr, stmt);
     }
     else if (_sym == TK_DEFAULT)
     {
@@ -2008,7 +2008,6 @@ ASTNode *CParser::FunctionDefinition(ASTNode *funcType)
 {
     ASTNode *funcName = NULL_AST_NODE;
     ASTNode *funcPrms = NULL_AST_NODE;
-    bool isPtrType = false;
 
     if (_sym == TK_TIMES)
     {

@@ -29,7 +29,7 @@ public:
             Elf32_Rel *Relocs,
             unsigned Relocsc,
             bool isLE)
-        : buf(BUF), PC(PC0), relocs(Relocs), relocsc(Relocsc),
+        : PC(PC0), buf(BUF), relocs(Relocs), relocsc(Relocsc),
           isLittleEndian(isLE)
     {
     }

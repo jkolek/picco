@@ -215,7 +215,7 @@ SeqIRExpr *ControlFlowGraph::toSequence()
 
         for (unsigned n = 0; n < basicBlocks->size(); n++)
         {
-            BasicBlock *bb = (*basicBlocks)[n];
+            //BasicBlock *bb = (*basicBlocks)[n];
 
             // body->add(bb->getElements());
         }

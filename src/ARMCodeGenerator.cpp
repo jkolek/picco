@@ -846,7 +846,6 @@ void ARMCodeGenerator::binaryOp(GenOp op, Item_t x, Item_t y)
             {
                 load(y);
                 dstReg = getTmpReg(y);
-                // TODO: Implement
             }
             else if (x->isImm() && (n = shiftBy(x->getImm())))
             {
@@ -1189,8 +1188,7 @@ void ARMCodeGenerator::call(Item_t x,
 }
 
 void ARMCodeGenerator::callReg(Item_t x,
-                               bool preserveReturnValue,
-                               const char *fnName)
+                               bool preserveReturnValue)
 {
     load(x);
     // TODO: Implement

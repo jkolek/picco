@@ -940,7 +940,6 @@ Item_t MemIRExpr::traverse(IRExprTree *iret)
 Item_t CallIRExpr::traverse(IRExprTree *iret)
 {
     CodeGenerator *gen = iret->getCodeGenerator();
-    ItemPool *itempool = iret->getItemPool();
     Item_t x = nullptr;
 
     if (IR_MATCH_NAME_VAL(_expr, "putc"))

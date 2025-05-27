@@ -22,13 +22,14 @@
 
 #define HELP_STR                                                               \
     "INPUT and OUTPUT stands for input and output files respectively\n\n"      \
-    "  -o, --output             Output object file, if not specified, "        \
+    "  -o, --output <file>      Output object file, if not specified, "        \
     "default\n"                                                                \
     "                           'output.out' file is generated\n"              \
     "  -S,                      Output assembly code\n"                        \
     "  -d, --disassemble        Print out code buffer\n"                       \
     "  -t, --print-tree         Print out abstract syntax tree\n"              \
     "  -e, --print-expr-tree    Print out intermediate representation\n"       \
+    "  --target <value>         Generate code for the given target\n"          \
     "  -h, --help               Print out this help information\n"             \
     "  -v, --version            Print out only version information\n\n"
 
@@ -145,6 +146,7 @@ int main(int argc, char **argv)
     printAST = false;
     printIR = false;
     printCodeBuf = false;
+    printCFG = false;
     optimize = false;
     asmOutput = false;
     n = 1;

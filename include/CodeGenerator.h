@@ -216,7 +216,7 @@ public:
     {
         assert(
             (_mode == I_LOCAL || _mode == I_STATIC || _mode == I_ADR ||
-             I_REGIND) &&
+             _mode == I_REGIND) &&
             "Item is not a variable, address, pointer or register indirect.");
         return _adr;
     }

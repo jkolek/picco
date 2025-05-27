@@ -434,7 +434,7 @@ int main(int argc, char **argv)
 {
     char output[256], target[256];
     // char *input;
-    bool outputOk, printHelp, printVersion;
+    bool outputOk; //printHelp, printVersion;
     int n;
     Linker *lnk;
 
@@ -448,7 +448,7 @@ int main(int argc, char **argv)
 
     strcpy(target, "arm");
     // input = nullptr;
-    printHelp = false;
+    //printHelp = false;
     outputOk = false;
     n = 1;
     lnk = nullptr;
@@ -466,7 +466,7 @@ int main(int argc, char **argv)
             strcpy(target, argv[++n]);
             argc -= 2;
         }
-        else if (strcmp(argv[n], "-h") == 0 || strcmp(argv[n], "--help") == 0)
+        /*else if (strcmp(argv[n], "-h") == 0 || strcmp(argv[n], "--help") == 0)
         {
             printHelp = true;
         }
@@ -475,7 +475,7 @@ int main(int argc, char **argv)
         {
             printVersion = true;
         }
-        /*else
+        else
         {
         input = argv[n];
         }*/

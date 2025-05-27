@@ -112,7 +112,7 @@ public:
     void binaryOp(GenOp op, Item_t x, Item_t y, Item_t z);
     void binaryOpFP(GenOp op, Item_t x, Item_t y);
     void call(Item_t x, bool preserveReturnValue, const char *fnName);
-    void callReg(Item_t x, bool preserveReturnValue, const char *fnName);
+    void callReg(Item_t x, bool preserveReturnValue);
     void emitPrologue(int frameSize,
                       unsigned paramCount,
                       bool hasCall,

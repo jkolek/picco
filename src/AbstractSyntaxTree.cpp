@@ -1454,6 +1454,7 @@ IRExpr *IndirectRefASTNode::emitIR(AbstractSyntaxTree *ast)
         return mem;
     }
 
+    memOffset = nullptr;
     tmpTp = nullptr;
     stb = ast->getSymbolTable();
     name = AST_IDENT_VALUE(_expr);
@@ -2539,7 +2540,7 @@ Type_t CallExprASTNode::checkType(AbstractSyntaxTree *ast)
         {
             // TODO: Check if types match for the formal and the actual
             // arguments.
-            Type_t argType = argVec[i]->checkType(ast);
+            argVec[i]->checkType(ast);
         }
     }
 
@@ -2731,7 +2732,7 @@ IRExpr *ListASTNode::emitIR(AbstractSyntaxTree *ast)
 IRExpr *VarDeclASTNode::emitIR(AbstractSyntaxTree *ast)
 {
     IRExpr *res, *x, *y;
-    Type_t tp;
+    //Type_t tp;
 
     if (AST_MATCH_NULL(_name) || AST_MATCH_NULL(_init))
         return NULL_IR_EXPR;
